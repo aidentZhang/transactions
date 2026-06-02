@@ -128,8 +128,7 @@ Java programming language.
 === JDBC
 
 A JDBC driver that supports distributed
-transactions implements the `javax.transaction.xa.XAResource` or
-`jakarta.transaction.xa.ExtendedXAResource` interface,
+transactions implements the `javax.transaction.xa.XAResource` interface,
 the `javax.sql.XAConnection` interface, and the `javax.sql.XADataSource`
 interface. Refer to the "`__JDBC 4.3 Specification__`" for further details.
 
@@ -140,8 +139,7 @@ Jakarta Messaging provider to support distributed transactions. A Jakarta Messag
 provider that supports the `XAResource` interface is able to participate
 as a resource manager in a distributed transaction processing system
 that uses a two-phase commit transaction protocol. In particular, a Jakarta Messaging
-provider implements the `javax.transaction.xa.XAResource` or
-`jakarta.transaction.xa.ExtendedXAResource` interface, the
+provider implements the `javax.transaction.xa.XAResource` interface, the
 `jakarta.jms.XAConnection` interface, and the `jakarta.jms.XASession`
 interface. Refer to the "`__Jakarta Messaging 3.0 Specification__`" for further details.
 
@@ -369,7 +367,6 @@ by the application.
 callbacks.
 * Commit or rollback the transaction.
 * Obtain the status of the transaction.
-* Obtain the read-only mode of the transaction.
 
 These functions are described in the sections
 below.
@@ -627,11 +624,6 @@ and `end` operations on the same `XAResource` object.
 registration (optional X/Open XA features) are not supported. We’ve
 omitted these features for a simpler `XAResource` interface and simpler
 resource adapter implementation.
-
-The `jakarta.transaction.xa.ExtendedXAResource` interface is an optional
-extension that can be implemented to additionally report capabilities:
-
-* Read-only mode to allow only read interactions with a resource
 
 ==== Opening a Resource Manager
 
@@ -1013,7 +1005,6 @@ The scalability of the library code is
 significantly enhanced by the addition of the `getResource` and
 `putResource` methods to the `TransactionSynchronizationRegistry`.
 
-[#transactional-annotation]
 === Transactional Annotation
 
 The `jakarta.transaction.Transactional`
