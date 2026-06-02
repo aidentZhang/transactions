@@ -16,11 +16,9 @@
 
 package jakarta.transaction;
 
-import jakarta.transaction.xa.ExtendedXAResource;
 import java.lang.IllegalStateException;
 import java.lang.SecurityException;
 import javax.transaction.xa.XAResource;
-import javax.transaction.xa.Xid;
 
 /**
  * The Transaction interface allows operations to be performed against the transaction in the target Transaction object.
@@ -75,14 +73,6 @@ public interface Transaction {
      * Enlist the given resource into the transaction associated with the target {@code Transaction} object.
      * </p>
      *
-     * <p>
-     * If the transaction was started with a value of {@code true} for {@link Transactional#isReadOnly()},
-     * {@link UserTransaction#begin(boolean)}, or {@link TransactionManager#begin(boolean)}, indicating the transaction will
-     * not commit, the transaction manager must attempt {@link ExtendedXAResource#setReadOnly(Xid)} on participating
-     * resources that implement {@link ExtendedXAResource} before invoking {@link XAResource#start(Xid, int)} on the
-     * resource. When the transaction ends, if requested to commit, the transaction manager must roll back each
-     * {@code XAResource}, raising {@link RollbackException} to the caller.
-     * </p>
      *
      * @param xaRes The XAResource object associated with the resource (connection).
      *
@@ -115,7 +105,6 @@ public interface Transaction {
      * <p>
      * Indicates if the transaction associated with the target {@code Transaction} object is effectively read-only,
      * indicating that the transaction will not commit. Read-only mode is requested for a transaction by supplying a value
-     * of {@code true} to {@link Transactional#isReadOnly()}, {@link UserTransaction#begin(boolean)}, or
      * {@link TransactionManager#begin(boolean)}.
      * </p>
      *
@@ -129,23 +118,7 @@ public interface Transaction {
      * @exception SystemException Thrown if the transaction manager encounters an unexpected error condition.
      * @since 2.1
      */
-    public boolean isReadOnly() throws SystemException;
 
-    /**
-     * Register a synchronization object for the transaction currently associated with the target object. The transction
-     * manager invokes the beforeCompletion method prior to starting the two-phase transaction commit process. After the
-     * transaction is completed, the transaction manager invokes the afterCompletion method.
-     *
-     * @param sync The Synchronization object for the transaction associated with the target object.
-     *
-     * @exception RollbackException Thrown to indicate that the transaction has been marked for rollback only.
-     *
-     * @exception IllegalStateException Thrown if the transaction in the target object is in the prepared state or the
-     * transaction is inactive.
-     *
-     * @exception SystemException Thrown if the transaction manager encounters an unexpected error condition.
-     *
-     */
     public void registerSynchronization(Synchronization sync)
             throws RollbackException, IllegalStateException,
             SystemException;

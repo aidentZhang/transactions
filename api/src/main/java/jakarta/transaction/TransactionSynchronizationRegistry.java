@@ -152,19 +152,4 @@ public interface TransactionSynchronizationRegistry {
      * @since JTA 1.1
      */
     boolean getRollbackOnly();
-
-    /**
-     * <p>
-     * Indicates if the transaction bound to the current thread is effectively read-only because the transaction was started
-     * with a value of {@code true} for {@link Transactional#isReadOnly()}, {@link UserTransaction#begin(boolean)}, or
-     * {@link TransactionManager#begin(boolean)}, indicating that the transaction will not commit.
-     * </p>
-     *
-     * @return The transaction read-only value.
-     *
-     * @exception IllegalStateException if no transaction is active.
-     *
-     * @since 2.1
-     */
-    public boolean isReadOnly();
 }

@@ -45,7 +45,6 @@ public interface UserTransaction {
      * </p>
      *
      * <p>
-     * A value of {@code true} for {@code isReadOnly} restricts transaction resolution such that the only possible outcome
      * is to {@linkplain #rollback() roll back} the transaction. The transaction {@linkplain #getStatus() status} does not
      * transition to {@link Status#STATUS_MARKED_ROLLBACK} unless {@link #setRollbackOnly()} is invoked on the transaction.
      * Prior to that point, resource managers must continue to permit read-only operations within the transaction. Some
@@ -54,11 +53,8 @@ public interface UserTransaction {
      * </p>
      *
      * <p>
-     * A value of {@code false} for {@code isReadOnly} does not restrict resolution of the transaction. This is the same
      * behavior offered by the {@link #begin()} method.
      * </p>
-     *
-     * @param isReadOnly designates a transaction as read-only and requires a resolution of {@link #rollback()}.
      *
      * @exception NotSupportedException Thrown if the thread is already associated with a transaction and the Transaction
      * Manager implementation does not support nested transactions.
@@ -66,26 +62,7 @@ public interface UserTransaction {
      * @exception SystemException Thrown if the transaction manager encounters an unexpected error condition.
      * @since 2.1
      */
-    void begin(boolean isReadOnly) throws NotSupportedException, SystemException;
 
-    /**
-     * Complete the transaction associated with the current thread. When this method completes, the thread is no longer
-     * associated with a transaction.
-     *
-     * @exception RollbackException Thrown to indicate that the transaction has been rolled back rather than committed.
-     *
-     * @exception HeuristicMixedException Thrown to indicate that a heuristic decision was made and that some relevant
-     * updates have been committed while others have been rolled back.
-     *
-     * @exception HeuristicRollbackException Thrown to indicate that a heuristic decision was made and that all relevant
-     * updates have been rolled back.
-     *
-     * @exception SecurityException Thrown to indicate that the thread is not allowed to commit the transaction.
-     *
-     * @exception IllegalStateException Thrown if the current thread is not associated with a transaction.
-     *
-     * @exception SystemException Thrown if the transaction manager encounters an unexpected error condition.
-     */
     void commit() throws RollbackException,
             HeuristicMixedException, HeuristicRollbackException, SecurityException,
             IllegalStateException, SystemException;
@@ -141,16 +118,4 @@ public interface UserTransaction {
      */
     void setTransactionTimeout(int seconds) throws SystemException;
 
-    /**
-     * Indicates if the transaction bound to the current thread is effectively read-only because the transaction was started
-     * with a value of {@code true} for {@link Transactional#isReadOnly()}, {@link UserTransaction#begin(boolean)}, or
-     * {@link TransactionManager#begin(boolean)}, indicating that the transaction will not commit.
-     *
-     * @return The transaction read-only value. If no transaction is associated with the current thread, this method returns
-     * {@code false}.
-     *
-     * @exception SystemException Thrown if the transaction manager encounters an unexpected error condition.
-     * @since 2.1
-     */
-    public boolean isReadOnly() throws SystemException;
 }

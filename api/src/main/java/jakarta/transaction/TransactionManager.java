@@ -39,40 +39,6 @@ public interface TransactionManager {
     public void begin() throws NotSupportedException, SystemException;
 
     /**
-     * <p>
-     * Create a new transaction, indicate if it is effectively read-only, and associate the transaction with the current
-     * thread.
-     * </p>
-     *
-     * <p>
-     * A value of {@code true} for {@code isReadOnly} restricts transaction resolution such that the only possible outcome
-     * is to {@linkplain #rollback() roll back} the transaction. The transaction {@linkplain #getStatus() status} does not
-     * transition to {@link Status#STATUS_MARKED_ROLLBACK} unless {@link #setRollbackOnly()} is invoked on the transaction.
-     * Prior to that point, resource managers must continue to permit read-only operations within the transaction. Some
-     * resource managers might also permit write operations that will ultimately roll back. A resource manager might be able
-     * to optimize its participation in a transaction when the application indicates the transaction will never commit.
-     * </p>
-     *
-     * <p>
-     * A value of {@code false} for {@code isReadOnly} does not restrict resolution of the transaction. This is the same
-     * behavior offered by the {@link #begin()} method.
-     * </p>
-     *
-     * <p>
-     * This is intended to be used by application servers or integrators.
-     * </p>
-     *
-     * @param isReadOnly designates a transaction as read-only and requires a resolution of {@link #rollback()}.
-     *
-     * @exception NotSupportedException Thrown if the thread is already associated with a transaction and the Transaction
-     * Manager implementation does not support nested transactions.
-     *
-     * @exception SystemException Thrown if the transaction manager encounters an unexpected error condition.
-     * @since 2.1
-     */
-    public void begin(boolean isReadOnly) throws NotSupportedException, SystemException;
-
-    /**
      * Complete the transaction associated with the current thread. When this method completes, the thread is no longer
      * associated with a transaction.
      *

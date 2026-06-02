@@ -192,33 +192,4 @@ public @interface Transactional {
     @Nonbinding
     public Class[] dontRollbackOn() default {};
 
-    /**
-     * <p>
-     * Indicates if the transaction is effectively read-only and required to roll back.
-     * </p>
-     *
-     * <p>
-     * A value of {@code true} restricts transaction resolution such that the only possible outcome is to roll back the
-     * transaction. The transaction status does not transition to {@link Status#STATUS_MARKED_ROLLBACK} unless the
-     * transaction is explicitly marked for rollback only. Prior to that point, resource managers must continue to permit
-     * read-only operations within the transaction. Some resource managers might also permit write operations that will
-     * ultimately roll back. A resource manager might be able to optimize its participation in a transaction by restricting
-     * usage to read-only access when the application indicates the transaction will never commit.
-     * </p>
-     *
-     * <p>
-     * A value of {@code true} takes precedence over {@link #rollbackOn()} and {@link #dontRollbackOn()}.
-     * </p>
-     *
-     * <p>
-     * If called inside a non-compatible transaction context, a TransactionalException with a nested
-     * InvalidTransactionException must be thrown.
-     * </p>
-     *
-     * @return whether the transaction is effectively read-only and required to roll back.
-     * @since 2.1
-     */
-    @Nonbinding
-    public boolean isReadOnly() default false;
-
 }
